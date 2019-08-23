@@ -11,6 +11,7 @@ import {
 export const DELAY_AUTHORITY_PRESENCE_CHECKS = 5000 /* 5 second check */
 
 export class EstablishAuthoritySystem implements ISystem {
+  private time: number = 0
   private lastAuthorityCheck: number
   private lastAuthorityBeaconSent: number
 
@@ -21,7 +22,8 @@ export class EstablishAuthoritySystem implements ISystem {
     this.sendAuthorityQuery()
   }
 
-  update(_: number) {
+  update(dt: number) {
+    this.time += dt
     if (this.authorityCheckTimeOverdue()) {
       this.updateAuthority(this.state.syncId)
       this.notifyWeAreAuthoritative()
@@ -73,6 +75,6 @@ export class EstablishAuthoritySystem implements ISystem {
   }
 
   private now() {
-    return new Date().getTime()
+    return this.time
   }
 }

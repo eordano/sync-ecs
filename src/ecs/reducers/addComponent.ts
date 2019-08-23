@@ -1,5 +1,5 @@
 import { ECS } from '../types/EntityComponentState'
-import { EntityId } from '../types/Entity'
+import { EntityId } from '../types/EntityId'
 import { Component, componentIdSymbol, componentClassIdSymbol } from '../types/Component'
 
 export function addComponent(state: ECS, entityId: EntityId, component: Component): ECS {

@@ -1,6 +1,6 @@
 import { ECS } from '../types/EntityComponentState'
-import { EntityId } from '../types/Entity'
-import { generateId } from '../generateId'
+import { EntityId } from '../types/EntityId'
+import { generateId } from '../util/generateId'
 
 export function addEntity(state: ECS, parentId?: EntityId, entityId?: EntityId): ECS {
   const result = entityId === undefined ? generateId(state.seed) : state.seed

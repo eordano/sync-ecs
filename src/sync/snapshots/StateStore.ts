@@ -1,3 +1,1 @@
-export class StateStore {
-    
-}
+export class StateStore {}

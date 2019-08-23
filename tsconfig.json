@@ -3,6 +3,6 @@
     "outFile": "./bin/game.js",
     "allowJs": true
   },
-  "include": ["src/**/*.ts", "test/networkState.spec.ts", "src/ecs/types"],
+  "include": ["src/**/*.ts", "test/networkState.spec.ts", "src/ecs/types", "src/ecs/generators"],
   "extends": "./node_modules/decentraland-ecs/types/tsconfig.json"
 }
