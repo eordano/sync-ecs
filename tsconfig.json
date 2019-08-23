@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "outFile": "./bin/game.js",
+    "allowJs": true
+  },
+  "include": ["src/**/*.ts", "test/networkState.spec.ts", "src/ecs/types"],
+  "extends": "./node_modules/decentraland-ecs/types/tsconfig.json"
+}
