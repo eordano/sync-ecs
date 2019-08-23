@@ -3,6 +3,9 @@ import { componentClassIdSymbol, ComponentId } from '../types/Component'
 
 export function removeComponent(state: ECS, componentId: ComponentId): ECS {
   const component = state.componentsById[componentId]
+  if (!component) {
+    return state
+  }
   const filterOutComponent = _ => _ !== componentId
   const entityId = state.componentParent[componentId]
   const clazz = component[componentClassIdSymbol]

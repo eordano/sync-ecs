@@ -1,5 +1,5 @@
-import { SyncPeerId } from '../SyncPeerId'
-import { UserState } from '../UserState'
+import { SyncPeerId } from './SyncPeerId'
+import { UserState } from './UserState'
 
 export interface NetworkedState {
   /**

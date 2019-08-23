@@ -1,9 +1,8 @@
-import { CommsMessage, KEY } from './messages'
-import { NetworkedState } from './network/NetworkedState';
-import { EstablishAuthoritySystem } from './network/establishAuthoritySystem';
+import { CommsMessage, KEY } from '../network/messages'
+import { NetworkedState } from '../network/NetworkedState'
+import { EstablishAuthoritySystem } from '../network/establishAuthoritySystem'
 
 export class NetworkedDCLSystem implements ISystem {
-
   constructor(public dcl: DecentralandInterface) {}
 
   /**
@@ -68,9 +67,8 @@ export class NetworkedDCLSystem implements ISystem {
     return (engine as any).addedSystems.filter((e: any) => e.cachedComponents)[0] as ISystem
   }
 
-  networkedSyncOnUpdate(dt: number) {
-    this.engine.update(dt)
-    if (Math.random() > 0.5) {
+  onUpdate(_: number) {
+    if (this.authority.weAreAuthoritative()) {
       this.networkPresentEntities()
     } else {
       this.localPresentEntities()

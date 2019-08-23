@@ -1,9 +1,14 @@
 import { ECS } from '../types/EntityComponentState'
 import { EntityId } from '../types/Entity'
+import { removeComponent } from './removeComponent';
 
 export function removeEntity(state: ECS, entityId: EntityId): ECS {
   if (state.parent[entityId] === undefined) {
     return state
+  }
+  const components = state.entityComponents[entityId]
+  for (let component of components) {
+    state = removeComponent(state, component)
   }
   const parent = { ...state.parent }
   delete parent[entityId]

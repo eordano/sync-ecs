@@ -6,7 +6,7 @@ import {
   AuthorityAnnouncementMessage,
   AuthorityQueryMessage,
   AUTHORITY
-} from '../messages'
+} from './messages'
 
 export const DELAY_AUTHORITY_PRESENCE_CHECKS = 5000 /* 5 second check */
 

@@ -1,6 +1,5 @@
 export const buildPresence = (syncId: string) => ({ a: syncId })
 export const buildPresenceAck = (mySyncId: string, otherSyncId: string) => ({ a: mySyncId, b: otherSyncId })
-export const buildUUIDMessage = (mySyncId: string, otherSyncId: string, data: EngineEvent) => ({ a: mySyncId, p: data })
 
 export const requestSnapshotMessage = (mySyncId: string) => ({ a: mySyncId })
 export const buildSnapshotMessage = (mySyncId: string, otherSyncId: string, data: any) => ({ a: mySyncId, s: data })
@@ -23,5 +22,3 @@ export const _DisposableComponentAdded = 'h'
 export const _DisposableComponentRemoved = 'i'
 export const _DisposableComponentUpdated = 'j'
 export const _ParentChanged = 'k'
-
-

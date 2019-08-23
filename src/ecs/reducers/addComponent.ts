@@ -3,6 +3,15 @@ import { EntityId } from '../types/Entity'
 import { Component, componentIdSymbol, componentClassIdSymbol } from '../types/Component'
 
 export function addComponent(state: ECS, entityId: EntityId, component: Component): ECS {
+  if (state.componentsById[component[componentIdSymbol]]) {
+    return state
+  }
+  if (state.componentsByClass[component[componentClassIdSymbol]] === undefined) {
+    return state
+  }
+  if (state.entityComponents[entityId] === undefined) {
+    return state
+  }
   const componentId = component[componentIdSymbol]
   const clazz = component[componentClassIdSymbol]
   return {
