@@ -1,10 +1,10 @@
 import { NetworkedState } from '../network/NetworkedState'
 import { EstablishAuthoritySystem } from '../network/EstablishAuthoritySystem'
 
-import { DecentralandInterface } from './interface/DCL'
-import { ISystem } from './interface/ISystem'
-import { IEngine } from './interface/IEngine'
-import { MessageBus } from './mocks/MessageBus'
+import { DecentralandInterface } from '../../dcl/interface/DCL'
+import { ISystem } from '../../dcl/interface/ISystem'
+import { IEngine } from '../../dcl/interface/IEngine'
+import { MessageBus } from '../../dcl/mocks/MessageBus'
 import {
   ComponentAdded,
   ComponentRemoved,
@@ -12,8 +12,8 @@ import {
   DisposableComponentRemoved,
   DisposableComponentUpdated,
   ParentChanged
-} from './interface/ECSEvents'
-import { IEvent } from './interface/IEvent'
+} from '../../dcl/interface/ECSEvents'
+import { IEvent } from '../../dcl/interface/IEvent'
 
 export class NetworkedDCLSystem implements ISystem {
   constructor(
@@ -31,7 +31,7 @@ export class NetworkedDCLSystem implements ISystem {
   activate(engine: IEngine) {
     this.engine = engine
     this.setupECSListeners()
-    this.dcl.onEvent((event: { type: string; data: any }) => {
+    this.dcl.onEvent((event: IEvent) => {
       if (event.type === 'uuidEvent') {
         // this.bus.emit('uuidEvent', event.data)
       }

@@ -7,7 +7,7 @@ import {
   AuthorityQueryMessage,
   AUTHORITY
 } from './messages'
-import { IMessageBus } from '~/sync/dcl/interface/IMessageBus'
+import { IMessageBus } from '~/dcl/interface/IMessageBus'
 
 export const DELAY_AUTHORITY_PRESENCE_CHECKS = 5000 /* 5 second check */
 
