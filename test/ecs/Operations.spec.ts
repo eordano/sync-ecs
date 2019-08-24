@@ -3,25 +3,27 @@ import { addEntity } from '~/ecs/reducers/addEntity'
 import { getEntityParent } from '~/ecs/selectors/getEntityParent'
 import { addComponent } from '~/ecs/reducers/addComponent'
 import { addComponentClass } from '~/ecs/reducers/addComponentClass'
-import { generateDiff } from '~/ecs/compare/generateDiff';
-import { applyDiff } from '~/ecs/generators/applyDiff';
+import { generateDiff } from '~/ecs/compare/generateDiff'
+import { applyDiff } from '~/ecs/generators/applyDiff'
+import { componentClassIdSymbol, componentIdSymbol } from '~/ecs/Component'
 
 test('Operations', () => {
   const state = emptyState()
 
   const myEntity = '1'
-  const s1 = addEntity(state, state.rootEntityId, myEntity)
+  const s1 = addEntity(state, myEntity)
 
   expect(getEntityParent(s1, myEntity)).toBe(state.rootEntityId)
 
-  const Transform = 1
+  const Transform = '1'
   const TransformName = 'Transform'
 
   const s2 = addComponentClass(s1, Transform, TransformName)
 
+  const ComponentId = '241'
   const s3 = addComponent(s2, myEntity, {
-    __classId__symbol_: Transform,
-    __component__id_: '2',
+    [componentClassIdSymbol]: Transform,
+    [componentIdSymbol]: ComponentId,
     position: { x: 0, y: 0, z: 0 }
   })
 

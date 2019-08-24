@@ -1,9 +1,9 @@
 export type ComponentId = string
-export type ComponentClassId = number
+export type ComponentClassId = string
 export type ComponentName = string
 
-export const componentClassIdSymbol = '__classId__symbol_'
-export const componentIdSymbol = '__component__id_'
+export const componentClassIdSymbol = '$'
+export const componentIdSymbol = '#'
 
 export interface Component {
   // @internal

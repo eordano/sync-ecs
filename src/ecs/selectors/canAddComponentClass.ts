@@ -7,7 +7,7 @@ export function canAddComponentClass(state: ECS, classId: ComponentClassId, clas
   if (state.componentNameToClass[className] !== undefined) {
     return false
   }
-  if (typeof classId !== 'number') {
+  if (typeof classId !== 'string') {
     return false
   }
   if (typeof className !== 'string') {

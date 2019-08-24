@@ -1,4 +1,3 @@
 import { NetworkedState } from '~/sync/network/NetworkedState'
 
-test('NetworkedState', () => {
-})
+test('NetworkedState', () => {})

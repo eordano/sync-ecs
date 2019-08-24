@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "A library to sync ECS state",
   "scripts": {
-    "lint:fix": "npx prettier --write 'src/**/*.ts'",
+    "lint:fix": "npx prettier --write 'src/**/*.ts' 'test/**/*.ts'",
     "test": "npx jest"
   },
   "prettier": {
