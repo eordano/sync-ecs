@@ -1,10 +1,13 @@
-export function makeItRain<T>(
-  state: T,
+export function makeItRain<T>({
+  state,
+  operationMappings
+}: {
+  state: T
   operationMappings: {
     elements: any[]
     operator: (a: T, ...args: any[]) => T
   }[]
-): T {
+}): T {
   return operationMappings.reduce(
     (newState, operationMap) =>
       operationMap.elements.reduce(

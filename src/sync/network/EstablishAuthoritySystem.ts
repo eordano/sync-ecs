@@ -7,17 +7,19 @@ import {
   AuthorityQueryMessage,
   AUTHORITY
 } from './messages'
+import { Bus } from '../dcl/mocks/Bus'
 
 export const DELAY_AUTHORITY_PRESENCE_CHECKS = 5000 /* 5 second check */
 
-export class EstablishAuthoritySystem implements ISystem {
+export class EstablishAuthoritySystem {
   private time: number = 0
   private lastAuthorityCheck: number
   private lastAuthorityBeaconSent: number
 
-  constructor(private state: NetworkedState, private bus: MessageBus) {}
+  constructor(private state: NetworkedState, private bus: Bus) {}
 
-  activate(_: Engine) {
+  activate() {
+    this.time = 0
     this.setupCheckAuthorityPresence()
     this.sendAuthorityQuery()
   }

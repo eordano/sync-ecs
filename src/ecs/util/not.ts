@@ -1,3 +1,3 @@
-export function not(_) {
+export function not(_: any) {
   return !_
 }

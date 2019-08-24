@@ -1,44 +1,36 @@
-import { CommsMessage, KEY } from '../network/messages'
 import { NetworkedState } from '../network/NetworkedState'
 import { EstablishAuthoritySystem } from '../network/EstablishAuthoritySystem'
 
+import { ISystem, Engine, DecentralandInterface } from './mocks/types'
+import { generateId } from '~/ecs/util/generateId'
+import { MessageBus } from './mocks/MessageBus'
+
+export const newNetworkedDCLSystem = (dcl: DecentralandInterface) => {
+  const bus = new MessageBus()
+  const networkedState = {
+    syncId: generateId().toString(),
+    authority: undefined,
+    registeredPeers: {}
+  }
+  const authority = new EstablishAuthoritySystem(networkedState, bus)
+  return new NetworkedDCLSystem(dcl, bus, networkedState, authority)
+}
+
 export class NetworkedDCLSystem implements ISystem {
-  constructor(public dcl: DecentralandInterface) {}
+  constructor(
+    public dcl: DecentralandInterface,
+    public bus: MessageBus,
+    public networkedState: NetworkedState,
+    public authority: EstablishAuthoritySystem
+  ) {}
 
   /**
    * Link to the ECS Engine
    */
   engine!: Engine
 
-  /**
-   * Reference to DCL Sync System
-   */
-  syncSystem: ISystem
-
-  /**
-   * Communications broker
-   */
-  bus = new MessageBus()
-
-  /**
-   * Networked status
-   */
-  networkedStatus: NetworkedState
-
-  /**
-   * Subsystem to establish authority
-   */
-  authority = new EstablishAuthoritySystem(this.networkedStatus, this.bus)
-
   activate(engine: Engine) {
     this.engine = engine
-    this.overrideSyncSystem()
-    engine.addSystem(this.authority)
-  }
-
-  overrideSyncSystem() {
-    // this.disableSyncSystem()
-    // this.dcl.onUpdate(this.networkedSyncOnUpdate.bind(this))
     this.setupECSListeners()
     this.dcl.onEvent(event => {
       if (event.type === 'uuidEvent') {
@@ -58,15 +50,6 @@ export class NetworkedDCLSystem implements ISystem {
     this.engine.eventManager.addListener(ParentChanged, this, this.parentChanged)
   }
 
-  disableSyncSystem() {
-    this.syncSystem = this.detectSyncSystem()
-    this.engine.removeSystem(this.syncSystem)
-  }
-
-  detectSyncSystem() {
-    return (engine as any).addedSystems.filter((e: any) => e.cachedComponents)[0] as ISystem
-  }
-
   onUpdate(_: number) {
     if (this.authority.weAreAuthoritative()) {
       this.networkPresentEntities()
@@ -78,10 +61,4 @@ export class NetworkedDCLSystem implements ISystem {
   networkPresentEntities() {}
 
   localPresentEntities() {}
-
-  sendIt<T extends CommsMessage>(message: T) {
-    const type = message[KEY]
-    delete message[KEY]
-    this.bus.emit(type, message)
-  }
 }

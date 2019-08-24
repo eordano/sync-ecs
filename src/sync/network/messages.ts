@@ -54,7 +54,7 @@ export interface AuthorityAnnouncementMessage extends CommsMessage {
 export interface UUIDMessage extends CommsMessage {
   [KEY]: typeof UUID_EVENT
   [TO]: string
-  [EVENT]: EngineEvent
+  [EVENT]: any
 }
 
 export interface RequestSnapshot extends CommsMessage {

@@ -13,38 +13,40 @@ import { changeEntityParent } from '../reducers/changeEntityParent'
 import { updateComponent } from '../reducers/updateComponent'
 
 export function applyDiff(state: ECS, diff: Diff): ECS {
-  return makeItRain(state, [
-    {
-      elements: diff.removedEntityIds,
-      operator: removeEntity
-    },
-    {
-      elements: diff.removedComponentClasses,
-      operator: removeComponentClass
-    },
-    {
-      elements: diff.removedComponents,
-      operator: removeComponent
-    },
-    {
-      elements: diff.newEntityIds,
-      operator: addEntity
-    },
-    {
-      elements: diff.newComponentClasses,
-      operator: addComponentClass
-    },
-    {
-      elements: diff.newComponents,
-      operator: addComponent
-    },
-    {
-      elements: diff.newParents,
-      operator: changeEntityParent
-    },
-    {
-      elements: diff.updatedComponents,
-      operator: updateComponent
-    }
-  ])
+  return makeItRain({
+    state, operationMappings: [
+      {
+        elements: diff.removedEntityIds,
+        operator: removeEntity
+      },
+      {
+        elements: diff.removedComponentClasses,
+        operator: removeComponentClass
+      },
+      {
+        elements: diff.removedComponents,
+        operator: removeComponent
+      },
+      {
+        elements: diff.newEntityIds,
+        operator: addEntity
+      },
+      {
+        elements: diff.newComponentClasses,
+        operator: addComponentClass
+      },
+      {
+        elements: diff.newComponents,
+        operator: addComponent
+      },
+      {
+        elements: diff.newParents,
+        operator: changeEntityParent
+      },
+      {
+        elements: diff.updatedComponents,
+        operator: updateComponent
+      }
+    ]
+    })
 }
