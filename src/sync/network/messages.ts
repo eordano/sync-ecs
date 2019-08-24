@@ -1,4 +1,4 @@
-import { Update } from '~/ecs/update/index'
+import { Update } from '~/ecs/update/Update'
 
 export const KEY = '_'
 

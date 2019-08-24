@@ -3,7 +3,8 @@ import { ECS } from '~/ecs/EntityComponentState'
 import { REQUEST_SNAPSHOT, FROM, DELTA, DATA, DeltaMessage, UNTIL, SINCE, Snapshot } from '../messages'
 import { NetworkedState } from '../NetworkedState'
 import { TimeSystem } from './TimeSystem'
-import { Update, applyUpdate } from '~/ecs/update/index'
+import { Update } from '~/ecs/update/Update'
+import { applyUpdate } from '~/ecs/update/applyUpdate'
 
 export const SNAPSHOT_TIMEOUT = 5000
 
@@ -65,9 +66,10 @@ export class ReplicaECS extends TimeSystem {
       if (this.hasPrimaryTime()) {
         if (this.primaryTime !== message[SINCE]) {
           console.log('warning -- lost sync')
+        } else {
+          this.applyUpdates(message[DATA])
+          this.primaryTime = message[UNTIL]
         }
-        this.applyUpdates(message[DATA])
-        this.primaryTime = message[UNTIL]
       } else {
         this.storeDelta(message)
       }

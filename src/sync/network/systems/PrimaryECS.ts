@@ -3,7 +3,9 @@ import { ECS } from '~/ecs/EntityComponentState'
 import { REQUEST_SNAPSHOT, SNAPSHOT, LOOKUP_ID, TO, FROM, DELTA, SINCE, UNTIL, DATA } from '../messages'
 import { NetworkedState } from '../NetworkedState'
 import { TimeSystem } from './TimeSystem'
-import { Update, applyUpdate } from '~/ecs/update/index'
+import { Update } from '~/ecs/update/Update'
+import { applyUpdate } from '~/ecs/update/applyUpdate'
+import { ECSFunctionName } from '~/ecs/update/ECSFunctionName'
 
 export class PrimaryECS extends TimeSystem {
   queuedUpdates: Update[] = []
@@ -16,11 +18,18 @@ export class PrimaryECS extends TimeSystem {
   update(dt: number) {
     super.update(dt)
     if (this.queuedUpdates.length) {
-      this.sendUpdates()
+      this.applyAndSendUpdates()
     }
   }
 
-  sendUpdates() {
+  addUpdate(fun: ECSFunctionName, args: any[]) {
+    this.queuedUpdates.push({
+      type: fun,
+      payload: args
+    })
+  }
+
+  applyAndSendUpdates() {
     const { lastUpdate, queuedUpdates } = this
     this.applyAllQueuedUpdates()
     this.bus.emit(DELTA, {
