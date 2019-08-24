@@ -1,11 +1,11 @@
 import { EntityId } from '../EntityId'
-import { ComponentClassId, Component, ComponentId } from '../Component'
+import { ComponentClassId, Component, ComponentId, ComponentName } from '../Component'
 
 export interface Diff {
   newEntityIds: EntityId[]
   removedEntityIds: EntityId[]
-  newParents: { entityId: EntityId; parentId: EntityId }[]
-  newComponentClasses: ComponentClassId[]
+  newParents: { [entityId: number]: EntityId }
+  newComponentClasses: { [componentClassId: number]: ComponentName
   removedComponentClasses: ComponentClassId[]
   newComponents: Component[]
   deletedComponents: ComponentId[]
