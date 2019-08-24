@@ -1,9 +1,8 @@
-import { generateId } from '../util/generateId'
 import { EntityComponentState } from '../EntityComponentState'
+import { generateStringId } from '../util/generateStringId'
 
 export function emptyState() {
-  const seed = generateId(0)
-  const rootEntityId = seed
+  const [rootEntityId, seed] = generateStringId(0)
   return {
     seed,
     rootEntityId,

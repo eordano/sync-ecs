@@ -1,4 +1,4 @@
-export function generateId(seed: number = 0) {
+export function generateStringId(seed: number = 0): [string, number] {
   seed >>>= 0
   var s = [0xf1ea5eed, seed, seed, seed]
   function jsf() {
@@ -7,5 +7,6 @@ export function generateId(seed: number = 0) {
     return s[3] >>> 0
   }
   for (var i = 0; i < 20; i++) jsf()
-  return jsf()
+  const newSeed = jsf()
+  return [newSeed.toString(), newSeed]
 }

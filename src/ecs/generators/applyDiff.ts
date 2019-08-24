@@ -14,7 +14,8 @@ import { updateComponent } from '../reducers/updateComponent'
 
 export function applyDiff(state: ECS, diff: Diff): ECS {
   return makeItRain({
-    state, operationMappings: [
+    state,
+    operationMappings: [
       {
         elements: diff.removedEntityIds,
         operator: removeEntity
@@ -48,5 +49,5 @@ export function applyDiff(state: ECS, diff: Diff): ECS {
         operator: updateComponent
       }
     ]
-    })
+  })
 }

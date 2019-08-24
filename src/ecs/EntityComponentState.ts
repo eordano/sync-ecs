@@ -1,29 +1,26 @@
 import { EntityId } from './EntityId'
 import { ComponentId, Component, ComponentClassId, ComponentName } from './Component'
-import { NumberRecord } from './util/NumberRecord'
 
 export interface EntityComponentState {
   seed: number
-
-  componentClassCount: number
 
   rootEntityId: EntityId
 
   entities: EntityId[]
 
-  parent: NumberRecord<EntityId, EntityId>
+  parent: Record<EntityId, EntityId>
 
-  componentsById: NumberRecord<ComponentId, Component>
+  componentsById: Record<ComponentId, Component>
 
-  componentParent: NumberRecord<ComponentId, EntityId>
+  componentParent: Record<ComponentId, EntityId>
 
-  entityComponents: NumberRecord<EntityId, ComponentId[]>
+  entityComponents: Record<EntityId, ComponentId[]>
 
-  componentsByClass: NumberRecord<ComponentClassId, ComponentId[]>
+  componentsByClass: Record<ComponentClassId, ComponentId[]>
 
   componentNameToClass: Record<ComponentName, ComponentClassId>
 
-  componentClassToName: NumberRecord<ComponentClassId, ComponentName>
+  componentClassToName: Record<ComponentClassId, ComponentName>
 }
 
 export type ECS = EntityComponentState

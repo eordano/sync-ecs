@@ -2,8 +2,6 @@ import { ECS } from '../EntityComponentState'
 import { Diff } from './Diff'
 import { Component } from '../Component'
 
-import { not } from '../util/not'
-
 import { entityExists } from '../selectors/entityExists'
 import { getEntityIds } from '../selectors/getEntityIds'
 import { parentChanged } from './selectors/parentChanged'
@@ -20,18 +18,18 @@ import { getComponentParentEntity } from '../selectors/getComponentParentEntity'
 
 export function generateDiff(from: ECS, to: ECS): Diff {
   const newEntityIds = getEntityIds(to).filter(_ => entityExists(from, _))
-  const removedEntityIds = getEntityIds(from).filter(_ => entityExists(to, _))
+  const removedEntityIds = getEntityIds(from).filter(_ => !entityExists(to, _))
   const newParents = getEntityIds(to)
     .filter(_ => parentChanged(from, to, _))
-    .map(_ => [_, getEntityParent(to, _)] as [number, number])
+    .map(_ => [_, getEntityParent(to, _)] as [string, string])
   const newComponentClasses = getComponentClasses(to)
-    .filter(_ => not(hasComponentClass(from, _)))
+    .filter(_ => !hasComponentClass(from, _))
     .map(_ => [_, getComponentName(to, _)] as [number, string])
-  const removedComponentClasses = getComponentClasses(from).filter(_ => not(hasComponentClass(to, _)))
+  const removedComponentClasses = getComponentClasses(from).filter(_ => !hasComponentClass(to, _))
   const newComponents = getComponents(to)
-    .filter(_ => not(componentExists(from, _)))
-    .map(_ => [getComponentParentEntity(to, _), _] as [number, Component])
-  const deletedComponents = getComponentIds(from).filter(_ => not(componentExists(to, _)))
+    .filter(_ => !componentExists(from, _))
+    .map(_ => [getComponentParentEntity(to, _), _] as [string, Component])
+  const deletedComponents = getComponentIds(from).filter(_ => !componentExists(to, _))
   const updatedComponents = getComponents(to).filter(_ =>
     differentComponent(getComponent(from, _), getComponent(to, _))
   )

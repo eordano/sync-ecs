@@ -1,4 +1,4 @@
-export type ComponentId = number
+export type ComponentId = string
 export type ComponentClassId = number
 export type ComponentName = string
 

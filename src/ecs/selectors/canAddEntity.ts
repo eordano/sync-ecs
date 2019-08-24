@@ -7,5 +7,8 @@ export function canAddEntity(state: ECS, parentId: EntityId, entityId: EntityId)
   if (state.entityComponents[parentId] === undefined) {
     return false
   }
+  if (typeof entityId !== 'string') {
+    return false
+  }
   return true
 }

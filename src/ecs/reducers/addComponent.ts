@@ -3,7 +3,7 @@ import { EntityId } from '../EntityId'
 import { Component, componentIdSymbol, componentClassIdSymbol } from '../Component'
 import { canAddComponent } from '../selectors/canAddComponent'
 
-export function addComponent(state: ECS, entityId: EntityId, component: Component): ECS {
+export function addComponent<T extends Component>(state: ECS, entityId: EntityId, component: T): ECS {
   if (!canAddComponent(state, entityId, component)) {
     return state
   }

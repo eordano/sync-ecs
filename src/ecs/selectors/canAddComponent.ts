@@ -12,5 +12,11 @@ export function canAddComponent(state: ECS, entityId: EntityId, component: Compo
   if (state.entityComponents[entityId] === undefined) {
     return false
   }
+  if (typeof component[componentClassIdSymbol] !== 'number') {
+    return false
+  }
+  if (typeof component[componentIdSymbol] !== 'string') {
+    return false
+  }
   return true
 }
