@@ -1,8 +1,9 @@
 import { ECS } from '../EntityComponentState'
 import { ComponentClassId, ComponentName } from '../Component'
+import { canAddComponentClass } from '../selectors/canAddComponentClass'
 
 export function addComponentClass(state: ECS, classId: ComponentClassId, className: ComponentName): ECS {
-  if (state.componentClassToName[classId]) {
+  if (!canAddComponentClass(state, classId, className)) {
     return state
   }
   return {

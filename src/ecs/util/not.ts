@@ -1,3 +1,3 @@
 export function not(_) {
-    return !_
+  return !_
 }

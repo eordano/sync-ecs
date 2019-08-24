@@ -6,7 +6,7 @@ export { EntityId }
 export interface EntityView {
   entityId: EntityId
   components: {
-    [componentClass: number]: Component
+    [componentName: string]: Component
   }
 }
 
@@ -14,9 +14,7 @@ export interface FullEntityView {
   parentId: EntityId
   entityId: EntityId
   components: {
-    [componentClass: number]: Component
+    [componentName: string]: Component
   }
-  childs: {
-    [entityId: number]: FullEntityView
-  }
+  children: FullEntityView[]
 }

@@ -1,6 +1,7 @@
 import { ECS } from '../EntityComponentState'
 import { EntityId } from '../EntityId'
 import { generateId } from '../util/generateId'
+import { canAddEntity } from '../selectors/canAddEntity'
 
 export function addEntity(state: ECS, parentId?: EntityId, entityId?: EntityId): ECS {
   const result = entityId === undefined ? generateId(state.seed) : state.seed
@@ -10,7 +11,7 @@ export function addEntity(state: ECS, parentId?: EntityId, entityId?: EntityId):
     parentId = undefined
   }
   parentId = parentId === undefined ? state.rootEntityId : parentId
-  if (state.entityComponents[entityId] !== undefined) {
+  if (!canAddEntity(state, parentId, entityId)) {
     return state
   }
   return {

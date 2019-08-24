@@ -4,10 +4,10 @@ import { ComponentClassId, Component, ComponentId, ComponentName } from '../Comp
 export interface Diff {
   newEntityIds: EntityId[]
   removedEntityIds: EntityId[]
-  newParents: { [entityId: number]: EntityId }
-  newComponentClasses: { [componentClassId: number]: ComponentName
+  newParents: [/* child */ EntityId, /* parent */ EntityId][]
+  newComponentClasses: [ComponentClassId, ComponentName][]
   removedComponentClasses: ComponentClassId[]
-  newComponents: Component[]
-  deletedComponents: ComponentId[]
+  newComponents: [EntityId, Component][]
+  removedComponents: ComponentId[]
   updatedComponents: Component[]
 }

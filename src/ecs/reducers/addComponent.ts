@@ -1,15 +1,10 @@
 import { ECS } from '../EntityComponentState'
 import { EntityId } from '../EntityId'
 import { Component, componentIdSymbol, componentClassIdSymbol } from '../Component'
+import { canAddComponent } from '../selectors/canAddComponent'
 
 export function addComponent(state: ECS, entityId: EntityId, component: Component): ECS {
-  if (state.componentsById[component[componentIdSymbol]]) {
-    return state
-  }
-  if (state.componentsByClass[component[componentClassIdSymbol]] === undefined) {
-    return state
-  }
-  if (state.entityComponents[entityId] === undefined) {
+  if (!canAddComponent(state, entityId, component)) {
     return state
   }
   const componentId = component[componentIdSymbol]
