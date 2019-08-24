@@ -1,6 +1,6 @@
 import { ECS } from '../EntityComponentState'
 import { EntityId } from '../EntityId'
-import { Component, ComponentClassId, ComponentId } from '../Component'
+import { ComponentClassId, ComponentId } from '../Component'
 
 export function canAddComponent(state: ECS, entityId: EntityId, componentClassId: ComponentClassId, componentId: ComponentId): boolean {
   if (state.componentsByClass[componentClassId] === undefined) {

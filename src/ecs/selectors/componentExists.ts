@@ -1,12 +1,10 @@
 import { ECS } from '../EntityComponentState'
-import { Component, ComponentId, componentIdSymbol } from '../Component'
+import { ComponentId } from '../Component'
 
-export function componentExists(state: ECS, componentId: ComponentId | Component) {
+export function componentExists(state: ECS, componentId: ComponentId) {
   if (typeof componentId === 'string') {
     return state.componentsById[componentId] !== undefined
   } else {
-    return (
-      componentId[componentIdSymbol] !== undefined && state.componentsById[componentId[componentIdSymbol]] !== undefined
-    )
+    return componentId !== undefined && state.componentsById[componentId] !== undefined
   }
 }

@@ -1,6 +1,6 @@
 import { ECS } from '../EntityComponentState'
-import { Component, componentIdSymbol } from '../Component'
+import { ComponentId } from '../Component'
 
-export function canUpdateComponent(state: ECS, component: Component): boolean {
-  return component[componentIdSymbol] !== undefined && state.componentsById[component[componentIdSymbol]] !== undefined
+export function canUpdateComponent(state: ECS, componentId: ComponentId): boolean {
+  return componentId !== undefined && state.componentsById[componentId] !== undefined
 }

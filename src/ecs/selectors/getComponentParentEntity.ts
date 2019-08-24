@@ -1,11 +1,7 @@
 import { ECS } from '../EntityComponentState'
 import { EntityId } from '../Entity'
-import { ComponentId, Component, componentIdSymbol } from '../Component'
+import { ComponentId } from '../Component'
 
-export function getComponentParentEntity(state: ECS, component: ComponentId | Component): EntityId {
-  if (typeof component === 'string') {
-    return state.componentParent[component]
-  } else {
-    return state.componentParent[component[componentIdSymbol]]
-  }
+export function getComponentParentEntity(state: ECS, component: ComponentId): EntityId {
+  return state.componentParent[component]
 }

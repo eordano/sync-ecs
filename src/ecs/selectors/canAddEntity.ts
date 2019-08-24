@@ -1,5 +1,6 @@
 import { ECS } from '../EntityComponentState'
 import { EntityId } from '../EntityId'
+
 export function canAddEntity(state: ECS, entityId: EntityId, parentId: EntityId): boolean {
   if (state.entityComponents[entityId] !== undefined) {
     console.log('no falsy', state.entityComponents)
