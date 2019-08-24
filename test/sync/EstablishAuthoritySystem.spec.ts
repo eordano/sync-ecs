@@ -20,7 +20,7 @@ function beforeAll(): [IMessageBus, NetworkedState, PeerAuthoritySystem] {
 
 test('initial state', () => {
   const [_, __, system] = beforeAll()
-  expect(system.weAreAuthoritative()).toBe(false)
+  expect(system.areWeAuthoritative()).toBe(false)
 })
 
 test('state after activation', () => {
@@ -32,7 +32,7 @@ test('state after activation', () => {
   })
   system.activate()
   expect(system.time).toBe(0)
-  expect(system.weAreAuthoritative()).toBe(false)
+  expect(system.areWeAuthoritative()).toBe(false)
   expect(calledAuthorityCheck.called).toBe(true)
 })
 
@@ -42,7 +42,7 @@ test('received authority info', () => {
     bus.emit(AUTHORITY_ANNOUNCEMENT, { [FROM]: somebody, [AUTHORITY]: somebody })
   })
   system.activate()
-  expect(system.weAreAuthoritative()).toBe(false)
+  expect(system.areWeAuthoritative()).toBe(false)
   expect(state.authority).toBe(somebody)
 })
 
@@ -50,7 +50,7 @@ test('timeout receiving authority info', () => {
   const [_, state, system] = beforeAll()
   system.activate()
   system.update(AUTHORITY_QUERY_TIMEOUT + 1)
-  expect(system.weAreAuthoritative()).toBe(true)
+  expect(system.areWeAuthoritative()).toBe(true)
   expect(state.authority).toBe(state.syncId)
 })
 
@@ -107,7 +107,7 @@ class BullyAuthoritySystem extends AuthorityBeaconSystem {
     super.activate()
     this.sendAuthorityBeacon()
   }
-  weAreAuthoritative() {
+  areWeAuthoritative() {
     return true
   }
 }

@@ -21,7 +21,7 @@ export abstract class AuthorityAwareSystem extends TimeSystem {
     super()
   }
 
-  weAreAuthoritative() {
+  areWeAuthoritative() {
     return this.state.authority === this.state.syncId
   }
 
@@ -36,7 +36,7 @@ export abstract class AuthorityAwareSystem extends TimeSystem {
 
   protected setupReplyToAuthorityAnnouncements() {
     this.bus.on(AUTHORITY_QUERY, (key: string, message: AuthorityQueryMessage) => {
-      if (this.weAreAuthoritative()) {
+      if (this.areWeAuthoritative()) {
         this.sendAuthorityAnnouncement(message[FROM])
       }
     })

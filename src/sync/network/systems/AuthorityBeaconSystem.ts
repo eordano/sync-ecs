@@ -27,7 +27,7 @@ export class AuthorityBeaconSystem extends AuthorityAwareSystem {
   }
 
   protected checkAndSendAuthorityBeacon() {
-    if (this.weAreAuthoritative() && this.authorityBeaconTimeOverdue()) {
+    if (this.areWeAuthoritative() && this.authorityBeaconTimeOverdue()) {
       this.sendAuthorityBeacon()
     }
   }

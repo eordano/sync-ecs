@@ -56,7 +56,7 @@ export class NetworkedDCLSystem implements ISystem {
   }
 
   onUpdate(_: number) {
-    if (this.authority.weAreAuthoritative()) {
+    if (this.authority.areWeAuthoritative()) {
       this.networkPresentEntities()
     } else {
       this.localPresentEntities()
