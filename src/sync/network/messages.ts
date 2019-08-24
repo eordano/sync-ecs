@@ -10,6 +10,7 @@ export const UNTIL = 'f'
 
 export const PRESENCE = 'p'
 export const PRESENCE_ACK = 'a'
+export const QUERY_PRESENCE = 'b'
 export const AUTHORITY_QUERY = 'z'
 export const AUTHORITY_ANNOUNCEMENT = 'y'
 export const UUID_EVENT = 'u'
@@ -34,6 +35,11 @@ export interface CommsMessage {
 export interface PresenceMessage extends CommsMessage {
   [KEY]: typeof PRESENCE
   [TO]: undefined
+}
+
+export interface QueryPresenceMessage extends CommsMessage {
+  [KEY]: typeof QUERY_PRESENCE
+  [TO]: string
 }
 
 export interface PresenceAckMessage extends CommsMessage {

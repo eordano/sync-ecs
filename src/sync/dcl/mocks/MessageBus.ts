@@ -1,6 +1,6 @@
-import { Bus } from './Bus'
+import { IMessageBus } from '../interface/IMessageBus'
 
-export class MessageBus implements Bus {
+export class MessageBus implements IMessageBus {
   listeners: { [key: string]: Function[] }
   emit(messageType: string, payload: { [key: string]: any }) {
     const listenng = this.listeners[messageType]

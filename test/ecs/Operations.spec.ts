@@ -23,9 +23,15 @@ test('Operations', () => {
   const s2 = addComponentClass(s1, TransformId, TransformName)
 
   const ComponentId = '241'
-  const s3 = addComponent(s2, myEntity, TransformId, {
-    position: { x: 0, y: 0, z: 0 }
-  }, ComponentId)
+  const s3 = addComponent(
+    s2,
+    myEntity,
+    TransformId,
+    {
+      position: { x: 0, y: 0, z: 0 }
+    },
+    ComponentId
+  )
 
   console.log(s3)
   const diff = generateDiff(empty, s3)

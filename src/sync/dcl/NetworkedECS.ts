@@ -1,20 +1,19 @@
 import { NetworkedState } from '../network/NetworkedState'
 import { EstablishAuthoritySystem } from '../network/EstablishAuthoritySystem'
 
-import { ISystem, Engine, DecentralandInterface } from './mocks/types'
-import { generateId } from '~/ecs/util/generateId'
+import { DecentralandInterface } from './interface/DCL'
+import { ISystem } from './interface/ISystem'
+import { IEngine } from './interface/IEngine'
 import { MessageBus } from './mocks/MessageBus'
-
-export const newNetworkedDCLSystem = (dcl: DecentralandInterface) => {
-  const bus = new MessageBus()
-  const networkedState = {
-    syncId: generateId().toString(),
-    authority: undefined,
-    registeredPeers: {}
-  }
-  const authority = new EstablishAuthoritySystem(networkedState, bus)
-  return new NetworkedDCLSystem(dcl, bus, networkedState, authority)
-}
+import {
+  ComponentAdded,
+  ComponentRemoved,
+  DisposableComponentCreated,
+  DisposableComponentRemoved,
+  DisposableComponentUpdated,
+  ParentChanged
+} from './interface/ECSEvents'
+import { IEvent } from './interface/IEvent'
 
 export class NetworkedDCLSystem implements ISystem {
   constructor(
@@ -27,12 +26,12 @@ export class NetworkedDCLSystem implements ISystem {
   /**
    * Link to the ECS Engine
    */
-  engine!: Engine
+  engine!: IEngine
 
-  activate(engine: Engine) {
+  activate(engine: IEngine) {
     this.engine = engine
     this.setupECSListeners()
-    this.dcl.onEvent(event => {
+    this.dcl.onEvent((event: { type: string; data: any }) => {
       if (event.type === 'uuidEvent') {
         // this.bus.emit('uuidEvent', event.data)
       }
@@ -41,13 +40,19 @@ export class NetworkedDCLSystem implements ISystem {
 
   onAddEntity() {}
   onRemoveEntity() {}
+  onComponentAdded(event: IEvent) {}
+  onComponentRemoved(event: IEvent) {}
+  onDisposableComponentCreated(event: IEvent) {}
+  onDisposableComponentRemoved(event: IEvent) {}
+  onDisposableComponentUpdated(event: IEvent) {}
+  onParentChanged(event: IEvent) {}
   setupECSListeners() {
-    this.engine.eventManager.addListener(ComponentAdded, this, this.componentAdded)
-    this.engine.eventManager.addListener(ComponentRemoved, this, this.componentRemoved)
-    this.engine.eventManager.addListener(DisposableComponentCreated, this, this.disposableComponentCreated)
-    this.engine.eventManager.addListener(DisposableComponentRemoved, this, this.disposableComponentRemoved)
-    this.engine.eventManager.addListener(DisposableComponentUpdated, this, this.disposableComponentUpdated)
-    this.engine.eventManager.addListener(ParentChanged, this, this.parentChanged)
+    this.engine.eventManager.addListener(ComponentAdded, this, this.onComponentAdded)
+    this.engine.eventManager.addListener(ComponentRemoved, this, this.onComponentRemoved)
+    this.engine.eventManager.addListener(DisposableComponentCreated, this, this.onDisposableComponentCreated)
+    this.engine.eventManager.addListener(DisposableComponentRemoved, this, this.onDisposableComponentRemoved)
+    this.engine.eventManager.addListener(DisposableComponentUpdated, this, this.onDisposableComponentUpdated)
+    this.engine.eventManager.addListener(ParentChanged, this, this.onParentChanged)
   }
 
   onUpdate(_: number) {

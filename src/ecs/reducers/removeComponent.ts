@@ -1,5 +1,5 @@
 import { ECS } from '../EntityComponentState'
-import {  ComponentId, ComponentClassId } from '../Component'
+import { ComponentId, ComponentClassId } from '../Component'
 import { canRemoveComponent } from '../selectors/canRemoveComponent'
 
 export function getComponentClassId(state: ECS, componentId: ComponentId): ComponentClassId {
@@ -11,7 +11,7 @@ export function removeComponent(state: ECS, componentId: ComponentId): ECS {
     return state
   }
 
-  const filterOutComponent = _ => _ !== componentId
+  const filterOutComponent = (_: any) => _ !== componentId
   const entityId = state.componentParent[componentId]
   const clazz = getComponentClassId(state, componentId)
   const componentsById = { ...state.componentsById }
