@@ -1,22 +1,23 @@
 import { NetworkedState } from '../NetworkedState'
 import { PRESENCE, QUERY_PRESENCE, QueryPresenceMessage, FROM, TO } from '../messages'
 import { IMessageBus } from '~/dcl/interface/IMessageBus'
+import { TimeSystem } from './TimeSystem'
 
 export const PEER_TIMED_OUT = 5000
 
-export class PeerPresenceSystem {
-  public time: number = 0
-
-  constructor(public state: NetworkedState, public bus: IMessageBus) {}
+export class PeerPresenceSystem extends TimeSystem {
+  constructor(public state: NetworkedState, public bus: IMessageBus) {
+    super()
+  }
 
   activate() {
-    this.time = 0
+    super.activate()
     this.setupAcknowledgePresence()
     this.setupListenToPresence()
   }
 
   update(dt: number) {
-    this.time += dt
+    super.update(dt)
     this.clearOldPeers()
   }
 
@@ -52,9 +53,5 @@ export class PeerPresenceSystem {
 
   clearPresence(peer: string) {
     delete this.state.registeredPeers[peer]
-  }
-
-  protected now() {
-    return this.time
   }
 }

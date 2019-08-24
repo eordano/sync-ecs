@@ -1,22 +1,24 @@
 import { NetworkedState } from '../NetworkedState'
 import { PRESENCE, FROM } from '../messages'
 import { IMessageBus } from '~/dcl/interface/IMessageBus'
+import { TimeSystem } from './TimeSystem'
 
 export const BEACON_INTERVAL = 1000
 
-export class PresenceBeaconSystem {
-  public time: number = 0
+export class PresenceBeaconSystem extends TimeSystem {
   public lastBeacon: number = 0
 
-  constructor(public state: NetworkedState, public bus: IMessageBus) {}
+  constructor(public state: NetworkedState, public bus: IMessageBus) {
+    super()
+  }
 
   activate() {
-    this.time = 0
+    super.activate()
     this.sendBeacon()
   }
 
   update(dt: number) {
-    this.time += dt
+    super.activate()
     this.checkAndSendBeacon()
   }
 
@@ -27,15 +29,11 @@ export class PresenceBeaconSystem {
   }
 
   shouldSendBeacon() {
-    return this.now() - this.lastBeacon > BEACON_INTERVAL
+    return this.now() - this.lastBeacon >= BEACON_INTERVAL
   }
 
   sendBeacon() {
-    this.bus.emit(PRESENCE, { [FROM]: this.state.syncId })
     this.lastBeacon = this.now()
-  }
-
-  protected now() {
-    return this.time
+    this.bus.emit(PRESENCE, { [FROM]: this.state.syncId })
   }
 }

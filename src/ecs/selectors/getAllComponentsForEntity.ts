@@ -1,4 +1,4 @@
-import { Component, ComponentId } from '../Component'
+import { ComponentId } from '../Component'
 import { ECS } from '../EntityComponentState'
 import { EntityId } from '../EntityId'
 

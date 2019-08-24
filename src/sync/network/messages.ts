@@ -1,12 +1,15 @@
+import { Update } from '~/ecs/update/index'
+
 export const KEY = '_'
 
 export const FROM = 'a'
 export const TO = 'b'
-export const AUTHORITY = 'b'
 export const EVENT = 'c'
 export const LOOKUP_ID = 'd'
 export const SINCE = 'e'
 export const UNTIL = 'f'
+export const DATA = 'g'
+export const AUTHORITY = 'h'
 
 export const PRESENCE = 'p'
 export const QUERY_PRESENCE = 'b'
@@ -82,9 +85,10 @@ export interface RequestDelta extends CommsMessage {
   [SINCE]?: number
 }
 
-export interface Delta extends CommsMessage {
+export interface DeltaMessage extends CommsMessage {
   [KEY]: typeof DELTA
   [TO]: string
+  [DATA]: Update[]
   [LOOKUP_ID]: string
   [UNTIL]: number
 }

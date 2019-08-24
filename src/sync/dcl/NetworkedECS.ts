@@ -1,10 +1,10 @@
-import { NetworkedState } from '../network/NetworkedState'
-import { EstablishAuthoritySystem } from '../network/systems/EstablishAuthoritySystem'
+import { NetworkedState } from '~/sync/network/NetworkedState'
+import { PeerAuthoritySystem } from '~/sync/network/systems/PeerAuthoritySystem'
 
-import { DecentralandInterface } from '../../dcl/interface/DCL'
-import { ISystem } from '../../dcl/interface/ISystem'
-import { IEngine } from '../../dcl/interface/IEngine'
-import { MessageBus } from '../../dcl/mocks/MessageBus'
+import { DecentralandInterface } from '~/dcl/interface/DCL'
+import { ISystem } from '~/dcl/interface/ISystem'
+import { IEngine } from '~/dcl/interface/IEngine'
+import { MessageBus } from '~/dcl/mocks/MessageBus'
 import {
   ComponentAdded,
   ComponentRemoved,
@@ -12,15 +12,15 @@ import {
   DisposableComponentRemoved,
   DisposableComponentUpdated,
   ParentChanged
-} from '../../dcl/interface/ECSEvents'
-import { IEvent } from '../../dcl/interface/IEvent'
+} from '~/dcl/interface/ECSEvents'
+import { IEvent } from '~/dcl/interface/IEvent'
 
 export class NetworkedDCLSystem implements ISystem {
   constructor(
     public dcl: DecentralandInterface,
     public bus: MessageBus,
     public networkedState: NetworkedState,
-    public authority: EstablishAuthoritySystem
+    public authority: PeerAuthoritySystem
   ) {}
 
   /**
