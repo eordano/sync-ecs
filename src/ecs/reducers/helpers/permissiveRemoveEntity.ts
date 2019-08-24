@@ -1,6 +1,6 @@
-import { ECS } from '../EntityComponentState'
-import { EntityId } from '../EntityId'
-import { removeComponent } from './removeComponent'
+import { ECS } from '../../EntityComponentState'
+import { EntityId } from '../../EntityId'
+import { removeComponent } from '../removeComponent'
 
 export function removeEntity(state: ECS, entityId: EntityId): ECS {
   if (state.parent[entityId] === undefined) {

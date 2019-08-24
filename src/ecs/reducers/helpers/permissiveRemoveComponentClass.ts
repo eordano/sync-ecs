@@ -1,6 +1,6 @@
-import { ECS } from '../EntityComponentState'
-import { ComponentClassId } from '../Component'
-import { removeComponent } from './removeComponent'
+import { ComponentClassId } from '../../Component'
+import { ECS } from '../../EntityComponentState'
+import { removeComponent } from '../removeComponent'
 
 export function permissiveRemoveComponentClass(state: ECS, classId: ComponentClassId): ECS {
   if (state.componentsByClass[classId] === undefined) {
