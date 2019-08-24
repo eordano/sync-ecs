@@ -18,7 +18,7 @@ export class PresenceBeaconSystem extends TimeSystem {
   }
 
   update(dt: number) {
-    super.activate()
+    super.update(dt)
     this.checkAndSendBeacon()
   }
 
