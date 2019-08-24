@@ -1,21 +1,29 @@
+import { Component, ComponentClassId, ComponentId } from '../Component'
 import { ECS } from '../EntityComponentState'
 import { EntityId } from '../EntityId'
-import { Component, componentIdSymbol, componentClassIdSymbol } from '../Component'
 import { canAddComponent } from '../selectors/canAddComponent'
+import { generateStringId } from '../util/generateStringId'
 
-export function addComponent<T extends Component>(state: ECS, entityId: EntityId, component: T): ECS {
-  if (!canAddComponent(state, entityId, component)) {
+export function addComponent(
+  state: ECS,
+  entityId: EntityId,
+  classId: ComponentClassId,
+  component: Component,
+  _id?: ComponentId
+): ECS {
+  const [componentId, seed] = _id === undefined ? generateStringId(state.seed) : [_id, state.seed]
+  if (!canAddComponent(state, entityId, classId, componentId)) {
     return state
   }
-  const componentId = component[componentIdSymbol]
-  const clazz = component[componentClassIdSymbol]
   return {
     ...state,
+    seed,
     componentsById: { ...state.componentsById, [componentId]: component },
     componentParent: { ...state.componentParent, [componentId]: entityId },
+    componentClass: { ...state.componentClass, [componentId]: classId },
     componentsByClass: {
       ...state.componentsByClass,
-      [clazz]: [...state.componentsByClass[clazz], componentId]
+      [classId]: [...state.componentsByClass[classId], componentId]
     },
     entityComponents: {
       ...state.entityComponents,

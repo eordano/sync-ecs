@@ -10,6 +10,7 @@ export function emptyState() {
     parent: { [rootEntityId]: rootEntityId },
     componentsById: {},
     componentParent: {},
+    componentClass: {},
     entityComponents: {
       [rootEntityId]: []
     },

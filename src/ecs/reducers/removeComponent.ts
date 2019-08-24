@@ -1,20 +1,23 @@
 import { ECS } from '../EntityComponentState'
-import { componentClassIdSymbol, ComponentId, Component, componentIdSymbol } from '../Component'
-import { getComponent } from '../selectors/getComponent'
+import {  ComponentId, ComponentClassId } from '../Component'
 import { canRemoveComponent } from '../selectors/canRemoveComponent'
 
-export function removeComponent(state: ECS, componentId: ComponentId | Component): ECS {
+export function getComponentClassId(state: ECS, componentId: ComponentId): ComponentClassId {
+  return state.componentClass[componentId]
+}
+
+export function removeComponent(state: ECS, componentId: ComponentId): ECS {
   if (!canRemoveComponent(state, componentId)) {
     return state
   }
-  const component = getComponent(state, componentId)
-  componentId = component[componentIdSymbol]
 
   const filterOutComponent = _ => _ !== componentId
   const entityId = state.componentParent[componentId]
-  const clazz = component[componentClassIdSymbol]
+  const clazz = getComponentClassId(state, componentId)
   const componentsById = { ...state.componentsById }
   delete componentsById[componentId]
+  const componentClass = { ...state.componentClass }
+  delete componentClass[componentId]
   const componentParent = { ...state.componentParent }
   delete componentParent[componentId]
   const entityComponentMembers = state.entityComponents[entityId].filter(filterOutComponent)
@@ -24,6 +27,7 @@ export function removeComponent(state: ECS, componentId: ComponentId | Component
     ...state,
     componentsById,
     componentParent,
+    componentClass,
     componentsByClass: { ...state.componentsByClass, [clazz]: componentsByClass },
     entityComponents: {
       [entityId]: entityComponentMembers

@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "module": "esnext",
+    "target": "esnext",
+    "experimentalDecorators": true,
     "lib": ["esnext", "dom"],
     "types": ["jest"],
     "paths": {

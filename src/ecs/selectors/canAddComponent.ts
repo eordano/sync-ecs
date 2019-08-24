@@ -1,26 +1,18 @@
 import { ECS } from '../EntityComponentState'
 import { EntityId } from '../EntityId'
-import { Component, componentIdSymbol, componentClassIdSymbol } from '../Component'
+import { Component, ComponentClassId, ComponentId } from '../Component'
 
-export function canAddComponent(state: ECS, entityId: EntityId, component: Component): boolean {
-  if (state.componentsById[component[componentIdSymbol]]) {
-    console.log('no componentby id', component[componentIdSymbol])
+export function canAddComponent(state: ECS, entityId: EntityId, componentClassId: ComponentClassId, componentId: ComponentId): boolean {
+  if (state.componentsByClass[componentClassId] === undefined) {
+    console.log('no component class', componentClassId)
     return false
   }
-  if (state.componentsByClass[component[componentClassIdSymbol]] === undefined) {
-    console.log('no component by clazz', component[componentClassIdSymbol])
+  if (state.componentsById[componentId] !== undefined) {
+    console.log('clashing id', componentId)
     return false
   }
   if (state.entityComponents[entityId] === undefined) {
     console.log('no entityComponents', entityId)
-    return false
-  }
-  if (typeof component[componentClassIdSymbol] !== 'string') {
-    console.log('no stringy ', component[componentClassIdSymbol])
-    return false
-  }
-  if (typeof component[componentIdSymbol] !== 'string') {
-    console.log('no stringy ', component[componentIdSymbol])
     return false
   }
   return true

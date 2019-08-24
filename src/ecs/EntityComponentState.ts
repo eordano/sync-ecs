@@ -18,6 +18,8 @@ export interface EntityComponentState {
 
   componentsByClass: Record<ComponentClassId, ComponentId[]>
 
+  componentClass: Record<ComponentId, ComponentClassId>
+
   componentNameToClass: Record<ComponentName, ComponentClassId>
 
   componentClassToName: Record<ComponentClassId, ComponentName>
