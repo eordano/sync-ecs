@@ -12,11 +12,11 @@ import { IMessageBus } from '~/dcl/interface/IMessageBus'
 export const DELAY_AUTHORITY_PRESENCE_CHECKS = 5000 /* 5 second check */
 
 export class EstablishAuthoritySystem {
-  private time: number = 0
-  private lastAuthorityCheck: number
-  private lastAuthorityBeaconSent: number
+  public time: number = 0
+  public lastAuthorityCheck: number
+  public lastAuthorityBeaconSent: number
 
-  constructor(private state: NetworkedState, private bus: IMessageBus) {}
+  constructor(public state: NetworkedState, public bus: IMessageBus) {}
 
   activate() {
     this.time = 0
@@ -26,11 +26,11 @@ export class EstablishAuthoritySystem {
 
   update(dt: number) {
     this.time += dt
-    if (this.authorityCheckTimeOverdue()) {
-      this.updateAuthority(this.state.syncId)
+    if (this.weAreAuthoritative() && this.authorityBeaconTimeOverdue()) {
       this.notifyWeAreAuthoritative()
     }
-    if (this.weAreAuthoritative() && this.authorityBeaconTimeOverdue()) {
+    if (this.authorityCheckTimeOverdue()) {
+      this.updateAuthority(this.state.syncId)
       this.notifyWeAreAuthoritative()
     }
   }
@@ -39,44 +39,52 @@ export class EstablishAuthoritySystem {
     return this.state.authority === this.state.syncId
   }
 
-  private setupCheckAuthorityPresence() {
-    this.bus.on(AUTHORITY_ANNOUNCEMENT, (message: AuthorityAnnouncementMessage, __: string) => {
+  protected setupCheckAuthorityPresence() {
+    this.setupCheckOtherAuthorityAnnouncements()
+    this.setupReplyToAuthorityAnnouncements()
+  }
+
+  protected setupCheckOtherAuthorityAnnouncements() {
+    this.bus.on(AUTHORITY_ANNOUNCEMENT, (key: string, message: AuthorityAnnouncementMessage) => {
       if (message[AUTHORITY] !== this.state.authority) {
         this.updateAuthority(message[AUTHORITY])
       }
+      this.lastAuthorityCheck = this.now()
     })
-    this.bus.on(AUTHORITY_QUERY, (_: AuthorityQueryMessage, __: string) => {
+  }
+  protected setupReplyToAuthorityAnnouncements() {
+    this.bus.on(AUTHORITY_QUERY, (key: string, message: AuthorityQueryMessage) => {
       if (this.weAreAuthoritative()) {
         this.notifyWeAreAuthoritative()
       }
     })
   }
 
-  private updateAuthority(authority: string) {
+  protected updateAuthority(authority: string) {
     this.lastAuthorityCheck = this.now()
     this.state.authority = authority
   }
 
-  private notifyWeAreAuthoritative() {
+  protected notifyWeAreAuthoritative() {
     this.lastAuthorityCheck = this.now()
     this.lastAuthorityBeaconSent = this.now()
     this.bus.emit(AUTHORITY_ANNOUNCEMENT, { [FROM]: this.state.syncId, [AUTHORITY]: this.state.syncId })
   }
 
-  private sendAuthorityQuery() {
+  protected sendAuthorityQuery() {
     this.lastAuthorityCheck = this.now()
     this.bus.emit(AUTHORITY_QUERY, { [FROM]: this.state.syncId })
   }
 
-  private authorityCheckTimeOverdue() {
-    return this.now() - this.lastAuthorityCheck > DELAY_AUTHORITY_PRESENCE_CHECKS
+  protected authorityCheckTimeOverdue() {
+    return this.now() - this.lastAuthorityCheck >= DELAY_AUTHORITY_PRESENCE_CHECKS
   }
 
-  private authorityBeaconTimeOverdue() {
-    return this.now() - this.lastAuthorityBeaconSent > DELAY_AUTHORITY_PRESENCE_CHECKS
+  protected authorityBeaconTimeOverdue() {
+    return this.now() - this.lastAuthorityBeaconSent >= DELAY_AUTHORITY_PRESENCE_CHECKS / 2
   }
 
-  private now() {
+  protected now() {
     return this.time
   }
 }

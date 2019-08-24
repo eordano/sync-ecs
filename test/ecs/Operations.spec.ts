@@ -33,10 +33,7 @@ test('Operations', () => {
     ComponentId
   )
 
-  console.log(s3)
   const diff = generateDiff(empty, s3)
-  console.log(diff)
-  console.log(applyDiff(empty, diff))
 
   function addNewTransform(state: ECS, targetEntity: EntityId, x: number, y: number, z: number) {
     const [newId, seed] = generateStringId(state.seed)
@@ -49,7 +46,5 @@ test('Operations', () => {
       seed
     }
   }
-
   const s4 = addNewTransform(s2, myEntity, 0, 2, 3)
-  console.log(s4)
 })

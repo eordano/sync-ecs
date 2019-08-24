@@ -1,7 +1,7 @@
 import { IMessageBus } from '../interface/IMessageBus'
 
 export class MessageBus implements IMessageBus {
-  listeners: { [key: string]: Function[] }
+  listeners: { [key: string]: Function[] } = {}
   emit(messageType: string, payload: { [key: string]: any }) {
     const listenng = this.listeners[messageType]
     if (!listenng) return
@@ -14,6 +14,9 @@ export class MessageBus implements IMessageBus {
     }
   }
   on(messageType: string, handler: any) {
-    this.listeners[messageType] = [...(this.listeners.messageType || []), handler]
+    if (!this.listeners[messageType]) {
+      this.listeners[messageType] = []
+    }
+    this.listeners[messageType].push(handler)
   }
 }
