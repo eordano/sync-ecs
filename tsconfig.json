@@ -1,8 +1,12 @@
 {
   "compilerOptions": {
-    "outFile": "./bin/game.js",
-    "allowJs": true
+    "baseUrl": ".",
+    "lib": ["esnext"],
+    "types": ["jest"],
+    "paths": {
+      "~/*": ["./src/*"]
+    }
   },
-  "include": ["src/**/*.ts", "test/networkState.spec.ts", "src/ecs/types", "src/ecs/generators"],
-  "extends": "./node_modules/decentraland-ecs/types/tsconfig.json"
+  "include": ["src/**/*.ts", "test/**/*.spec.ts"],
+  "exclude": ["node_modules"]
 }

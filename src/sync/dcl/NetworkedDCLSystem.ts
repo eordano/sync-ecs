@@ -1,6 +1,6 @@
 import { CommsMessage, KEY } from '../network/messages'
 import { NetworkedState } from '../network/NetworkedState'
-import { EstablishAuthoritySystem } from '../network/establishAuthoritySystem'
+import { EstablishAuthoritySystem } from '../network/EstablishAuthoritySystem'
 
 export class NetworkedDCLSystem implements ISystem {
   constructor(public dcl: DecentralandInterface) {}

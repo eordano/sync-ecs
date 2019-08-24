@@ -1,3 +1,5 @@
+import { emptyState } from '~/ecs/generators/emptyState'
+
 test('EmptyState', () => {
-    const state = EmptyState()
+    const state = emptyState()
 })
