@@ -1,4 +1,4 @@
-import { EstablishAuthoritySystem } from '../network/EstablishAuthoritySystem'
+import { EstablishAuthoritySystem } from '../network/systems/EstablishAuthoritySystem'
 import { DecentralandInterface } from '../../dcl/interface/DCL'
 import { MessageBus } from '../../dcl/mocks/MessageBus'
 import { emptyNetworkedState } from '~/sync/network/emptyNetworkedState'

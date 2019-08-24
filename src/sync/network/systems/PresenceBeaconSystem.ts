@@ -1,5 +1,5 @@
-import { NetworkedState } from './NetworkedState'
-import { PRESENCE, FROM } from './messages'
+import { NetworkedState } from '../NetworkedState'
+import { PRESENCE, FROM } from '../messages'
 import { IMessageBus } from '~/dcl/interface/IMessageBus'
 
 export const BEACON_INTERVAL = 1000

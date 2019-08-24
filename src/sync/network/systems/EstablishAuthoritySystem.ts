@@ -1,4 +1,4 @@
-import { NetworkedState } from './NetworkedState'
+import { NetworkedState } from '../NetworkedState'
 import {
   AUTHORITY_QUERY,
   FROM,
@@ -6,7 +6,7 @@ import {
   AuthorityAnnouncementMessage,
   AuthorityQueryMessage,
   AUTHORITY
-} from './messages'
+} from '../messages'
 import { IMessageBus } from '~/dcl/interface/IMessageBus'
 
 export const DELAY_AUTHORITY_PRESENCE_CHECKS = 5000 /* 5 second check */

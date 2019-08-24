@@ -1,4 +1,4 @@
-import { EstablishAuthoritySystem, DELAY_AUTHORITY_PRESENCE_CHECKS } from '~/sync/network/EstablishAuthoritySystem'
+import { EstablishAuthoritySystem, DELAY_AUTHORITY_PRESENCE_CHECKS } from '~/sync/network/systems/EstablishAuthoritySystem'
 import { MessageBus } from '~/dcl/mocks/MessageBus'
 import { emptyNetworkedState } from '~/sync/network/emptyNetworkedState'
 import { AUTHORITY_QUERY, AUTHORITY_ANNOUNCEMENT, FROM, TO, AUTHORITY } from '~/sync/network/messages'

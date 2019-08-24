@@ -1,5 +1,5 @@
-import { NetworkedState } from './NetworkedState'
-import { PRESENCE, QUERY_PRESENCE, QueryPresenceMessage, FROM, TO } from './messages'
+import { NetworkedState } from '../NetworkedState'
+import { PRESENCE, QUERY_PRESENCE, QueryPresenceMessage, FROM, TO } from '../messages'
 import { IMessageBus } from '~/dcl/interface/IMessageBus'
 
 export const PEER_TIMED_OUT = 5000

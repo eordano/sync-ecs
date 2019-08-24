@@ -1,5 +1,5 @@
 import { NetworkedState } from '../network/NetworkedState'
-import { EstablishAuthoritySystem } from '../network/EstablishAuthoritySystem'
+import { EstablishAuthoritySystem } from '../network/systems/EstablishAuthoritySystem'
 
 import { DecentralandInterface } from '../../dcl/interface/DCL'
 import { ISystem } from '../../dcl/interface/ISystem'
