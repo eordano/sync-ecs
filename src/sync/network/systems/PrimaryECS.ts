@@ -15,6 +15,20 @@ export class PrimaryECS extends TimeSystem {
     super()
   }
 
+  replySnapshots = (_: any, message: any) => {
+    this.bus.emit(SNAPSHOT, {
+      [FROM]: this.netState.syncId,
+      [TO]: message[FROM],
+      [LOOKUP_ID]: message[LOOKUP_ID],
+      [DATA]: this.state
+    })
+  }
+
+  activate() {
+    super.activate()
+    this.setupReplySnapshotRequests()
+  }
+
   update(dt: number) {
     super.update(dt)
     if (this.queuedUpdates.length) {
@@ -47,13 +61,10 @@ export class PrimaryECS extends TimeSystem {
   }
 
   setupReplySnapshotRequests() {
-    this.bus.on(REQUEST_SNAPSHOT, (_: any, message: any) => {
-      this.bus.emit(SNAPSHOT, {
-        [FROM]: this.netState.syncId,
-        [TO]: message[FROM],
-        [LOOKUP_ID]: message[LOOKUP_ID],
-        [SNAPSHOT]: this.state
-      })
-    })
+    this.bus.on(REQUEST_SNAPSHOT, this.replySnapshots)
+  }
+
+  disableReplySnapshotRequests() {
+    this.bus.off(REQUEST_SNAPSHOT, this.replySnapshots)
   }
 }

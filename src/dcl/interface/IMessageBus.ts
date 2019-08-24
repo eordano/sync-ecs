@@ -10,4 +10,5 @@ export interface IMessageBus {
    * (messageType: T, payload: { [key: string]: any }) => void)
    */
   on(messageType: string, handler: any): void
+  off(messageType: string, handler: any): void
 }

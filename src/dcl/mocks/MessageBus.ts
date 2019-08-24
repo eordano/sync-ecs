@@ -19,4 +19,7 @@ export class MessageBus implements IMessageBus {
     }
     this.listeners[messageType].push(handler)
   }
+  off(messageType: string, handler: any) {
+    this.listeners[messageType] = this.listeners[messageType].filter(_ => _ !== handler)
+  }
 }

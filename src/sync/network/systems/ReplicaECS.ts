@@ -1,6 +1,6 @@
 import { IMessageBus } from '~/dcl/interface/IMessageBus'
 import { ECS } from '~/ecs/EntityComponentState'
-import { REQUEST_SNAPSHOT, FROM, DELTA, DATA, DeltaMessage, UNTIL, SINCE, Snapshot } from '../messages'
+import { REQUEST_SNAPSHOT, FROM, DELTA, DATA, DeltaMessage, UNTIL, SINCE, Snapshot, LOOKUP_ID } from '../messages'
 import { NetworkedState } from '../NetworkedState'
 import { TimeSystem } from './TimeSystem'
 import { Update } from '~/ecs/update/Update'
@@ -33,7 +33,7 @@ export class ReplicaECS extends TimeSystem {
 
   querySnapshot() {
     this.snapshotRequestTimestamp = this.now()
-    this.bus.emit(REQUEST_SNAPSHOT, { [FROM]: this.netState.syncId })
+    this.bus.emit(REQUEST_SNAPSHOT, { [FROM]: this.netState.syncId, [LOOKUP_ID]: this.now() })
   }
 
   receiveSnapshot(snapshot: Snapshot) {
