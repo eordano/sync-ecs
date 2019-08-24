@@ -1,5 +1,5 @@
-import { ECS } from '../types/EntityComponentState'
-import { EntityId } from '../types/EntityId'
+import { ECS } from '../EntityComponentState'
+import { EntityId } from '../EntityId'
 import { generateId } from '../util/generateId'
 
 export function addEntity(state: ECS, parentId?: EntityId, entityId?: EntityId): ECS {

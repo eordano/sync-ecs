@@ -1,5 +1,5 @@
-import { EntityId } from '../types/EntityId'
-import { ComponentClassId, Component, ComponentId } from '../types/Component'
+import { EntityId } from '../EntityId'
+import { ComponentClassId, Component, ComponentId } from '../Component'
 
 export interface Diff {
   newEntityIds: EntityId[]

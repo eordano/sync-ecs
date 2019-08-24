@@ -1,5 +1,5 @@
-import { ECS } from '../types/EntityComponentState'
-import { Component, componentIdSymbol } from '../types/Component'
+import { ECS } from '../EntityComponentState'
+import { Component, componentIdSymbol } from '../Component'
 
 export function updateComponent(state: ECS, component: Component): ECS {
   const componentId = component[componentIdSymbol]

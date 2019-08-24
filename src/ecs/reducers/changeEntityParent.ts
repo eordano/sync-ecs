@@ -1,5 +1,5 @@
-import { ECS } from '../types/EntityComponentState'
-import { EntityId } from '../types/EntityId'
+import { ECS } from '../EntityComponentState'
+import { EntityId } from '../EntityId'
 
 export function changeEntityParent(state: ECS, entityId: EntityId, parentId: EntityId): ECS {
   if (state.entityComponents[parentId] === undefined) {

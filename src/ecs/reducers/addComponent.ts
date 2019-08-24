@@ -1,6 +1,6 @@
-import { ECS } from '../types/EntityComponentState'
-import { EntityId } from '../types/EntityId'
-import { Component, componentIdSymbol, componentClassIdSymbol } from '../types/Component'
+import { ECS } from '../EntityComponentState'
+import { EntityId } from '../EntityId'
+import { Component, componentIdSymbol, componentClassIdSymbol } from '../Component'
 
 export function addComponent(state: ECS, entityId: EntityId, component: Component): ECS {
   if (state.componentsById[component[componentIdSymbol]]) {

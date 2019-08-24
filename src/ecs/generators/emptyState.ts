@@ -1,5 +1,5 @@
 import { generateId } from '../util/generateId'
-import { EntityComponentState } from '../types/EntityComponentState'
+import { EntityComponentState } from '../EntityComponentState'
 
 export function emptyState() {
   const seed = generateId(0)

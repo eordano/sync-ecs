@@ -1,6 +1,6 @@
 import { EntityId } from './EntityId'
 import { ComponentId, Component, ComponentClassId, ComponentName } from './Component'
-import { NumberRecord } from '../util/NumberRecord'
+import { NumberRecord } from './util/NumberRecord'
 
 export interface EntityComponentState {
   seed: number

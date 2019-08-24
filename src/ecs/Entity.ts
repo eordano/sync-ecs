@@ -1,6 +1,8 @@
 import { Component } from './Component'
 import { EntityId } from './EntityId'
 
+export { EntityId }
+
 export interface EntityView {
   entityId: EntityId
   components: {

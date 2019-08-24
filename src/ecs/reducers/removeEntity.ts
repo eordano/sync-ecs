@@ -1,5 +1,5 @@
-import { ECS } from '../types/EntityComponentState'
-import { EntityId } from '../types/EntityId'
+import { ECS } from '../EntityComponentState'
+import { EntityId } from '../EntityId'
 import { removeComponent } from './removeComponent'
 
 export function removeEntity(state: ECS, entityId: EntityId): ECS {

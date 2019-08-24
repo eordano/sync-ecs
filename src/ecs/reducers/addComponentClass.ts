@@ -1,5 +1,5 @@
-import { ECS } from '../types/EntityComponentState'
-import { ComponentClassId, ComponentName } from '../types/Component'
+import { ECS } from '../EntityComponentState'
+import { ComponentClassId, ComponentName } from '../Component'
 
 export function addComponentClass(state: ECS, classId: ComponentClassId, className: ComponentName): ECS {
   if (state.componentClassToName[classId]) {
