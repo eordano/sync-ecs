@@ -1,6 +1,17 @@
 import { IMessageBus } from '~/dcl/interface/IMessageBus'
 import { ECS } from '~/ecs/EntityComponentState'
-import { REQUEST_SNAPSHOT, FROM, DELTA, DATA, DeltaMessage, UNTIL, SINCE, Snapshot, LOOKUP_ID, SNAPSHOT } from '../messages'
+import {
+  REQUEST_SNAPSHOT,
+  FROM,
+  DELTA,
+  DATA,
+  DeltaMessage,
+  UNTIL,
+  SINCE,
+  Snapshot,
+  LOOKUP_ID,
+  SNAPSHOT
+} from '../messages'
 import { NetworkedState } from '../NetworkedState'
 import { TimeSystem } from './TimeSystem'
 import { Update } from '~/ecs/update/Update'

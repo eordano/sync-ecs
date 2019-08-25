@@ -1,4 +1,4 @@
-import { CommsMessage } from './messages'
+import { CommsMessage } from '../network/messages'
 import { decodeKey } from './decodeKey'
 
 export function decodeMessage<T extends CommsMessage>(message: T) {
