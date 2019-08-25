@@ -1,6 +1,6 @@
 import { IMessageBus } from '~/dcl/interface/IMessageBus'
 import { ECS } from '~/ecs/EntityComponentState'
-import { REQUEST_SNAPSHOT, FROM, DELTA, DATA, DeltaMessage, UNTIL, SINCE, Snapshot, LOOKUP_ID } from '../messages'
+import { REQUEST_SNAPSHOT, FROM, DELTA, DATA, DeltaMessage, UNTIL, SINCE, Snapshot, LOOKUP_ID, SNAPSHOT } from '../messages'
 import { NetworkedState } from '../NetworkedState'
 import { TimeSystem } from './TimeSystem'
 import { Update } from '~/ecs/update/Update'
@@ -12,7 +12,7 @@ export class ReplicaECS extends TimeSystem {
   snapshotRequestTimestamp: number = 0
   lastUpdate: number = 0
   primaryTime: number = -1
-  stored: { [key: number]: DeltaMessage }
+  stored: { [key: number]: DeltaMessage } = {}
 
   constructor(public state: ECS, public netState: NetworkedState, public bus: IMessageBus) {
     super()
@@ -20,6 +20,7 @@ export class ReplicaECS extends TimeSystem {
 
   activate() {
     super.activate()
+    this.listenForSnapshots()
     this.listenForUpdates()
     this.querySnapshot()
   }
@@ -36,10 +37,15 @@ export class ReplicaECS extends TimeSystem {
     this.bus.emit(REQUEST_SNAPSHOT, { [FROM]: this.netState.syncId, [LOOKUP_ID]: this.now() })
   }
 
+  listenForSnapshots() {
+    this.bus.on(SNAPSHOT, (_: any, snapshot: Snapshot) => this.receiveSnapshot(snapshot))
+  }
+
   receiveSnapshot(snapshot: Snapshot) {
     this.state = snapshot[DATA]
     let time = snapshot[UNTIL]
-    while (this.stored[time]) {
+
+    while (this.stored[time] !== undefined) {
       const delta = this.stored[time]
       delete this.stored[time]
       this.applyUpdates(delta[DATA])

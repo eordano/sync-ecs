@@ -8,7 +8,7 @@ export function buildAuthorityPeer(name: string, bus: IMessageBus) {
     bus = new MessageBus()
   }
   const authNet = emptyNetworkedState(name)
-  const authEcs = emptyState()
-  const authSystem = new PrimaryECS(authEcs, authNet, bus)
-  return { bus, authNet, authSystem }
+  const initialEcsState = emptyState()
+  const authSystem = new PrimaryECS(initialEcsState, authNet, bus)
+  return { bus, authNet, authSystem, initialEcsState }
 }
